@@ -1,0 +1,18 @@
+{
+    "name": "jjdoor/php-common-functions",
+    "description": "php的一些常字符串，数组等等一些常用处理方法",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Benjamin\\PhpCommonFunctions\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "benjamin",
+            "email": "jjdoor@163.com"
+        }
+    ],
+    "require": {},
+    "minimum-stability": "stable"
+}
