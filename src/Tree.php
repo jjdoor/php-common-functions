@@ -1,5 +1,5 @@
 <?php
-namespace Benjamin\Tree;
+namespace Benjamin\Common;
 /*
  * 数据库内结构如下所示
  *
