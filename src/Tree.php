@@ -44,6 +44,15 @@ id	parentid	label
  */
 class Tree
 {
+    //静态变量
+    static $son_mark = 'children';
+
+    //设置静态变量
+    public static function setSonMark($mark)
+    {
+        self::$son_mark = $mark;
+    }
+
     /**
      * 输出树
      * @param $data
@@ -56,7 +65,7 @@ class Tree
             if ($item['parentid'] == $parentId) {
                 $children = static::buildTree($data, $item['id']);
                 if (!empty($children)) {
-                    $item['children'] = $children;
+                    $item[self::$son_mark] = $children;
                 }
                 $tree[] = $item;
             }
@@ -79,8 +88,8 @@ class Tree
                 array_unshift($branch, $v);
 //                break;
             } else {
-                if (isset($v['children'])) {
-                    $is_exists = self::getTreeBranch($v['children'], $ids);
+                if (isset($v[self::$son_mark])) {
+                    $is_exists = self::getTreeBranch($v[self::$son_mark], $ids);
                     if (!empty($is_exists)) {
                         array_unshift($branch, $v);
 //                        break;
