@@ -91,7 +91,11 @@ class Tree
                 if (isset($v[self::$son_mark])) {
                     $is_exists = self::getTreeBranch($v[self::$son_mark], $ids);
                     if (!empty($is_exists)) {
-                        array_unshift($branch, $v);
+                        $tmp = $v;
+                        $tmp[self::$son_mark] = null;
+                        $tmp[self::$son_mark] = $is_exists;
+
+                        array_unshift($branch, $tmp);
 //                        break;
                     }
                 }
