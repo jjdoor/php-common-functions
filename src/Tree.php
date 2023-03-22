@@ -73,6 +73,57 @@ class Tree
         return $tree;
     }
 
+    //重构buildTree方法，返回数据需要增加子节点的深度
+    static function buildTree2($data, $parentId = 0,$depth = 0) {
+        $tree = [];
+        foreach ($data as $item) {
+            if ($item['parentid'] == $parentId) {
+                $item['depth'] = $depth;
+                $children = static::buildTree2($data, $item['id'],$depth+1);
+                $children = array_map(function ($item) use ($depth){
+                    $item['depth'] = $depth+1;
+                    return $item;
+                }, $children);
+                if (!empty($children)) {
+                    $item[self::$son_mark] = $children;
+                }
+                $tree[] = $item;
+            }
+        }
+        return $tree;
+    }
+
+    /*
+     * 递归重组节点信息为一维数组，并保存原来顺序
+     */
+    static function array_multi2single($array) {
+        static $result_array = array();
+        foreach ($array as $value) {
+            if (is_array($value)) {
+                self::array_multi2single($value);
+            } else
+                $result_array[] = $value;
+        }
+        return $result_array;
+    }
+
+    /*
+     * 递归重组节点信息为二维数组，并保存原来顺序
+     */
+    static function array_multi2singlearray($array) {
+        static $result_array = array();
+        foreach ($array as $value) {
+            if (is_array($value) && count($value,1) > count($value)) {
+                $son = $value[self::$son_mark];
+                unset($value[self::$son_mark]);
+                $result_array[] = $value;
+                self::array_multi2singlearray($son);
+            } else
+                $result_array[] = $value;
+        }
+        return $result_array;
+    }
+
     /**
      * 任意ids数组，获取包含ids的树
      * @param $tree buildTree使用后，获取的树
