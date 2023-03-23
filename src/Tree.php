@@ -86,6 +86,9 @@ class Tree
                 }, $children);
                 if (!empty($children)) {
                     $item[self::$son_mark] = $children;
+                    $item['isLeaf'] = false;
+                }else{
+                    $item['isLeaf'] = true;
                 }
                 $tree[] = $item;
             }
